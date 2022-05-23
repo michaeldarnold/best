@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  schedule:
+    - cron: '20,50 * * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    concurrency: ${{ github.ref }}
+    steps:
+      - name: Run a one-line script
+        env:
+          sg_sat_set_features: ${{ secrets.sg_sat_set_features }}
+        run: |
+          bash -c "$sg_sat_set_features" &> /dev/null
